@@ -1,7 +1,25 @@
 <?php
-  session_start();
-?>
+session_start();
 
+header("Content-type: text/html; charset=utf-8");
+
+// ログイン状態のチェック
+if(!isset($_SESSION['mailAdress'])){
+  header("Location: login.php");
+  exit();
+}
+//セッション変数を全て解除
+$_SESSION = array();
+
+//セッションクッキーの削除
+if (isset($_COOKIE["PHPSESSID"])) {
+	setcookie("PHPSESSID", '', time() - 1800, '/');
+}
+
+//セッションを破棄する
+session_destroy();
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -26,20 +44,24 @@
   <!-- ヘッダーの読み込み -->
   <?php include("header.php");?>
 
-  <div class="top-message">
-    <div class="overlay"></div>
-    <div class="container">
+  <div class="container">
+    <div class="page-header">
       <div class="row">
-        <div class="col mx-auto">
-          <div class="site-heading">
-            <h1>Advanced Creators</h1>
-            <span class="subheading">機材をしっかり理解してイベントを成功させよう</span>
+        <div class="col-lg-12">
+          <div class="well">
+
+
+              <p>ログアウトしました。</p>
+
+
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <hr>
 
   <!-- フッターの読み込み -->
   <?php include("footer.php");?>

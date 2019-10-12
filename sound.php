@@ -1,5 +1,7 @@
 <?php
-  session_start();
+require_once("equipment.php");
+require_once("soundData.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -26,20 +28,40 @@
   <!-- ヘッダーの読み込み -->
   <?php include("header.php");?>
 
-  <div class="top-message">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col mx-auto">
-          <div class="site-heading">
-            <h1>Advanced Creators</h1>
-            <span class="subheading">機材をしっかり理解してイベントを成功させよう</span>
-          </div>
+  <main role="main">
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1>SoundEquipments</h1>
+        <p class="lead text-muted"></p>
+        <p>
+          <a href="equipmentInsert.php?genre=卓" class="btn btn-primary my-2">追加する</a>
+        </p>
+      </div>
+    </section>
+
+    <div class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+
+          <?php foreach ($equipments as $equipment): ?>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="<?php echo $equipment->getImg1() ?>">
+                <div class="card-body">
+                  <p class="card-text"><?php echo $equipment->getName() ?></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-sm btn-outline-secondary" href="show.php?name=<?php echo $equipment->getName() ?>">見る</a>
+                    <small class="text-muted">Last Modified <?php echo $equipment->getDate() ?></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php endforeach ?>
+
         </div>
       </div>
     </div>
-  </div>
-
+  </main>
 
   <!-- フッターの読み込み -->
   <?php include("footer.php");?>

@@ -21,13 +21,18 @@
             機材一覧
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">卓</a>
-            <a class="dropdown-item" href="#">舞台</a>
-            <a class="dropdown-item" href="#">照明</a>
+            <a class="dropdown-item" href="sound.php">卓</a>
+            <a class="dropdown-item" href="stage.php">舞台</a>
+            <a class="dropdown-item" href="light.php">照明</a>
           </div>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="login.php">ログイン</a>
+          <?php if (isset($_SESSION['login'])): ?>
+            <a class="nav-link" href="mypage.php">マイページ</a>
+            <a class="nav-link" href="login.php">ログイン</a>
+          <?php else : ?>
+           <a class="nav-link" href="login.php">ログイン</a>
+         <?php endif; ?>
         </li>
       </ul>
     </div>

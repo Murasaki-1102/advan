@@ -1,6 +1,39 @@
 <?php
-  session_start();
+session_start();
+
+header("Content-type: text/html; charset=utf-8");
+
+if(!isset($_SESSION['mailAdress'])){
+  header("Location: login.php");
+  exit();
+}
+
+$mailAdress = $_SESSION['mailAdress'];
+
+//データベース接続
+require_once("db.php");
+$dbh = db_connect();
+
+try{
+  //例外処理を投げる（スロー）ようにする
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  //アカウントで検索
+  $statement = $dbh->prepare("SELECT * FROM member WHERE mailAdress=(:mailAdress) AND flag =1");
+  $statement->bindValue(':mailAdress', $mailAdress, PDO::PARAM_STR);
+  $statement->execute();
+
+  if($row = $statement->fetch()){
+    $account = $row['account'];
+}
+
+}catch (PDOException $e){
+  print('Error:'.$e->getMessage());
+  exit();
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -26,20 +59,27 @@
   <!-- ヘッダーの読み込み -->
   <?php include("header.php");?>
 
-  <div class="top-message">
-    <div class="overlay"></div>
-    <div class="container">
+  <div class="container">
+    <div class="page-header">
       <div class="row">
-        <div class="col mx-auto">
-          <div class="site-heading">
-            <h1>Advanced Creators</h1>
-            <span class="subheading">機材をしっかり理解してイベントを成功させよう</span>
+        <div class="col-lg-12">
+          <div class="well">
+
+
+              <h1>Mypage</h1>
+              <p>account: <?=htmlspecialchars($account, ENT_QUOTES)?></p>
+              <p>mailAdress: <?=htmlspecialchars($mailAdress, ENT_QUOTES)?></p>
+              <a href="logout.php">ログアウト</a>
+
+
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <hr>
 
   <!-- フッターの読み込み -->
   <?php include("footer.php");?>

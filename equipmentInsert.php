@@ -5,6 +5,9 @@ header("Content-type: text/html; charset=utf-8");
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
+$genre = $_GET['genre'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +25,9 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
   <link rel="stylesheet" href="advan.css">
   <!-- Web font CSS -->
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/Insert.js"></script>
+
 </head>
 
 <body>
@@ -34,60 +40,93 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
       <div class="row">
         <div class="col">
           <div class="well">
-            <form  action="RegistrationCheck.php" method="POST">
+            <form  action="equipmentInsertCheck.php?genre=<?php echo $genre ?>" method="POST" enctype="multipart/form-data" name="Insert">
               <fieldset>
 
-                <legend>会員登録</legend>
+                <legend><?php echo $genre ?>機材追加</legend>
 
                 <div class="form-group">
-                  <label for="mailAdress" class="col">mailAdress</label>
+                  <label for="maker" class="col">maker</label>
                   <div class="col">
-                    <input type="text" class="form-control" name="mailAdress" placeholder="c011xxxxxx@xxxxxxxx.jp"
+                    <input type="text" class="form-control" name="maker" placeholder="YAMAHA"
                     value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="account" class="col">accountName</label>
+                  <label for="name" class="col">name</label>
                   <div class="col">
-                    <input type="text" class="form-control" name="account" placeholder="アカウント名"
+                    <input type="text" class="form-control" name="name" placeholder="MGP32X"
                     value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="grade" class="col">grade</label>
+                  <label for="category" class="col">category</label>
                   <div class="col">
-                    <select class="form-control" name="grade">
+                    <select class="form-control" name="category">
                       <option></option>
-                      <option>16</option>
-                      <option>17</option>
-                      <option>18</option>
-                      <option>19</option>
-                      <option>20</option>
+                      <option>mixer</option>
+                      <option>processor</option>
+                      <option>mic</option>
+                      <option>amp</option>
+                      <option>light</option>
+                      <option>?</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="password" class="col">Password</label>
+                  <label for="comment" class="col">comment</label>
                   <div class="col">
-                    <input type="password" class="form-control" name="password" placeholder="半角英数字の5文字以上30文字以下"
+                    <textarea class="form-control" name="comment" placeholder="使いやすいです。"value=""></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="stock" class="col">stock</label>
+                  <div class="col">
+                    <input type="text" class="form-control" name="stock" placeholder="1台"
                     value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="password" class="col">Password(確認用)</label>
+                  <label for="weight" class="col">weight</label>
                   <div class="col">
-                    <input type="password" class="form-control" name="password_conf" placeholder="半角英数字の5文字以上30文字以下"
+                    <input type="text" class="form-control" name="weight" placeholder="20kg"
                     value="">
                   </div>
                 </div>
 
                 <div class="form-group">
+                  <label for="power" class="col">power</label>
                   <div class="col">
-                    <button type="submit" class="btn">登録</button>
+                    <input type="text" class="form-control" name="power" placeholder="90W"
+                    value="">
+                  </div>
+                </div>
+
+                <div class="custom-file">
+                  <label class="custom-file-label" for="customFile">Top画像</label>
+                  <div class="col">
+                    <input type="file" class="custom-file-input" name="img" id="select_img" accept="image/jpeg, image/gif, image/png">
+                  </div>
+                </div>
+
+
+
+                <div class="custom-file">
+                  <label class="custom-file-label" for="customFile">画像3枚まで選択...</label>
+                  <div class="col">
+                    <input type="file" class="custom-file-input" name="img[]" id="select_img" accept="image/jpeg, image/gif, image/png" multiple="multiple">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <div class="col">
+                    <a href="javascript:void(0)" onclick="input_check()"><button type="submit" class="btn">プレビュー</button></a>
                   </div>
                 </div>
 

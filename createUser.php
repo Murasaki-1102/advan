@@ -4,6 +4,9 @@ session_start();
 
 header("Content-type: text/html; charset=utf-8");
 
+//クリックジャッキング対策
+header('X-FRAME-OPTIONS: SAMEORIGIN');
+
 //PHPMailerを使用するための読み込み
 require 'src/Exception.php';
 require 'src/PHPMailer.php';
@@ -21,34 +24,43 @@ if(empty($_POST)) {
 	header("Location: top.php");
 	exit();
 }else{
+	$urltoken = $_SESSION['urltoken'];
 	$mailAdress = $_SESSION['mailAdress'];
 	$account = $_SESSION['account'];
-
+	$grade = $_SESSION['grade'];
+	$password_hash =  password_hash($_SESSION['password'], PASSWORD_DEFAULT);
 }
 
 if (count($errors) === 0){
 
-	$urltoken = hash('sha256',uniqid(rand(),1));
-	$url = "http://localhost/advan/createUserCheck.php"."?urltoken=".$urltoken;
-
 	//ここでデータベースに登録する
-	try{
-		//例外処理を投げる（スロー）ようにする
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  try{
+    //例外処理を投げる（スロー）ようにする
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$statement = $dbh->prepare("INSERT INTO member (urltoken) VALUES (:urltoken)");
+    $dbh->beginTransaction();
 
-		//プレースホルダへ実際の値を設定する
-		$statement->bindValue(':urltoken', $urltoken, PDO::PARAM_STR);
-		$statement->execute();
+    $statement = $dbh->prepare("INSERT INTO member (urltoken,mailadress,account,grade,password,date) VALUES (:urltoken,:mailadress,:account,:grade,:password_hash,now() )");
 
-		//データベース接続切断
-		$dbh = null;
+    //プレースホルダへ実際の値を設定する
+    $statement->bindValue(':urltoken', $urltoken, PDO::PARAM_STR);
+    $statement->bindValue(':mailadress', $mailAdress, PDO::PARAM_STR);
+    $statement->bindValue(':account', $account, PDO::PARAM_STR);
+    $statement->bindValue(':grade', $grade, PDO::PARAM_STR);
+    $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+    $statement->execute();
 
-	}catch (PDOException $e){
-		print('Error:'.$e->getMessage());
-		exit();
+		$dbh->commit();
+
+    //データベース接続切断
+    $dbh = null;
+
+  }catch (PDOException $e){
+    print('Error:'.$e->getMessage());
+    exit();
 	}
+
+	$url = "http://localhost/advan/createUserCheck.php"."?urltoken=".$urltoken;
 
 	//メールの宛先
 	$mailTo = $mailAdress;
@@ -62,7 +74,10 @@ if (count($errors) === 0){
 	$subject = "【Advan】会員登録用URLのお知らせ";
 
 	//Fromヘッダーを作成
-	$header = 'From: '.$name."< ".$mailAdress." >";
+	$header = <<< EOF
+	'From: '.$name.
+	"< ".$mailAdress." >"
+	EOF;
 
 	$mail = new PHPMailer\PHPMailer\PHPMailer();
 
@@ -99,18 +114,6 @@ if (count($errors) === 0){
 	} else {
 
 		$message = "メールをお送りしました。24時間以内にメールに記載されたURLへ進んでください。";
-
-		//セッション変数を全て解除
-		$_SESSION = array();
-
-		//クッキーの削除
-		if (isset($_COOKIE["PHPSESSID"])) {
-			setcookie("PHPSESSID", '', time() - 1800, '/');
-		}
-
-		//セッションを破棄する
-		@session_destroy();
-
 	}
 }
 

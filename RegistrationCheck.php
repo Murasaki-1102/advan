@@ -75,42 +75,22 @@ if(empty($_POST)) {
   endif;
 }
 /*
-ここで本登録用のmemberテーブルにすでに登録されているmailかどうかをチェックする。
+ここで本登録用のmemberテーブルにすでに登録されているmailadressかどうかをチェックする。
 $errors['member_check'] = "このメールアドレスはすでに利用されております。";
 */
 //エラーが無ければセッションに登録
 
 
 if(count($errors) === 0){
+
   $_SESSION['mailAdress'] = $mailAdress;
   $_SESSION['account'] = $account;
   $_SESSION['grade'] = $grade;
   $_SESSION['password'] = $password;
 
-  $password_hash =  password_hash($_SESSION['password'], PASSWORD_DEFAULT);
 
-  //ここでデータベースに登録する
-  try{
-    //例外処理を投げる（スロー）ようにする
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $statement = $dbh->prepare("INSERT INTO member (mailadress,account,grade,password,date) VALUES (:mailadress,:account,:grade,:password_hash,now() )");
-
-    //プレースホルダへ実際の値を設定する
-
-    $statement->bindValue(':mailadress', $mailAdress, PDO::PARAM_STR);
-    $statement->bindValue(':account', $account, PDO::PARAM_STR);
-    $statement->bindValue(':grade', $grade, PDO::PARAM_STR);
-    $statement->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
-    $statement->execute();
-
-    //データベース接続切断
-    $dbh = null;
-
-  }catch (PDOException $e){
-    print('Error:'.$e->getMessage());
-    exit();
-  }
+  $urltoken = hash('sha256',uniqid(rand(),1));
+  $_SESSION['urltoken'] = $urltoken;
 }
 
 ?>
