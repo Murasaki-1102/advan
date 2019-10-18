@@ -1,30 +1,18 @@
 <?php
-  session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-  <title>Advan機材リスト</title>
-
-  <link rel="stylesheet" href="advan.css">
-  <!-- Web font CSS -->
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-
+  <?php include("component/head.php"); ?>
 </head>
 
 <body>
 
   <!-- ヘッダーの読み込み -->
-  <?php include("header.php");?>
+  <?php include("component/header.php");?>
 
   <div class="top-message">
     <div class="overlay"></div>
@@ -40,11 +28,54 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h1 class="text-center">機材リスト</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="genre">
+          <div class="icon">
+            <a href="http://localhost/advan/main/list.php?genre=Sound">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-sliders-h fa-stack-1x fa-inverse" ></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="genre">
+          <div class="icon">
+            <a href="http://localhost/advan/main/list.php?genre=Stage">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="genre">
+          <div class="icon">
+            <a href="http://localhost/advan/main/list.php?genre=Light">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-lightbulb fa-stack-1x fa-inverse" ></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- フッターの読み込み -->
-  <?php include("footer.php");?>
-
-
+  <?php include("component/footer.php");?>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
