@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['login'])){
-  header("Location: http://localhost/advan/auth/login.php");
+  header("Location: ../auth/login.php");
 }
 
 require_once("../database/equipment.php");

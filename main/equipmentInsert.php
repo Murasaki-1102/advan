@@ -6,7 +6,7 @@ header("Content-type: text/html; charset=utf-8");
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
 if(!isset($_SESSION['login'])){
-  header("Location: http://localhost/advan/auth/login.php");
+  header("Location: ../auth/login.php");
 }
 
 $genre = $_GET['genre'];

@@ -22,7 +22,10 @@ if($genre == "Sound"){
   $table = "light_equipments";
 }
 
+
+$login = 1;
 $way = $_SESSION['way'];
+
 $maker = isset($_SESSION['maker']) ? $_SESSION['maker'] : NULL; //三項演算子
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
 $category = isset($_SESSION['category']) ? $_SESSION['category'] : NULL;
@@ -63,7 +66,8 @@ if (count($errors) === 0){
       $dbh->commit();
 
       //データベース接続切断
-      $dbh = null;//セッション変数を全て解除
+      $dbh = null;
+      //セッション変数を全て解除
       $_SESSION = array();
 
       //セッションクッキーの削除
@@ -71,12 +75,8 @@ if (count($errors) === 0){
         setcookie("PHPSESSID", '', time() - 1800, '/');
       }
 
-      //セッションを破棄する
-      session_destroy();
-
-      header("Location: http://localhost/advan/main/list.php?genre=$genre");
-
-      //$_SESSION['login'] = "login";
+      $_SESSION['login'] = "login";
+      header("Location: list.php?genre=$genre");
 
     }catch (PDOException $e){
       print('Error:'.$e->getMessage());
@@ -109,7 +109,8 @@ if (count($errors) === 0){
       $dbh->commit();
 
       //データベース接続切断
-      $dbh = null;//セッション変数を全て解除
+      $dbh = null;
+      //セッション変数を全て解除
       $_SESSION = array();
 
       //セッションクッキーの削除
@@ -117,11 +118,8 @@ if (count($errors) === 0){
         setcookie("PHPSESSID", '', time() - 1800, '/');
       }
 
-      //セッションを破棄する
-      session_destroy();
-
-      //$_SESSION['login'] = "login";
-      header("Location: http://localhost/advan/main/list.php?genre=$genre");
+      $_SESSION['login'] = "login";
+      header("Location: list.php?genre=$genre");
 
     }catch (PDOException $e){
       print('Error:'.$e->getMessage());

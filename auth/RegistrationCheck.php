@@ -24,7 +24,7 @@ function spaceTrim ($str)
 }
 
 if(empty($_POST)) {
-  header("Location: http://localhost/advan/top.php");
+  header("Location: ../index.php");
   exit();
 }else{
   //POSTされたデータを変数に入れる
@@ -65,12 +65,7 @@ if(empty($_POST)) {
     $password_hide = str_repeat('*', strlen($password));
   }
 }
-/*
-ここで本登録用のmemberテーブルにすでに登録されているmailadressかどうかをチェックする。
-$errors['member_check'] = "このメールアドレスはすでに利用されております。";
-*/
 //エラーが無ければセッションに登録
-
 
 if(count($errors) === 0){
 
@@ -78,7 +73,6 @@ if(count($errors) === 0){
   $_SESSION['account'] = $account;
   $_SESSION['grade'] = $grade;
   $_SESSION['password'] = $password;
-
 
   $urltoken = hash('sha256',uniqid(rand(),1));
   $_SESSION['urltoken'] = $urltoken;

@@ -12,4 +12,4 @@
 <!-- Web font CSS -->
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
-<link rel="stylesheet" href="http://localhost/advan/css/advan.css">
+<link rel="stylesheet" href="http://advancedcreators.undo.jp/site/list/css/advan.css">

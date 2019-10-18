@@ -6,12 +6,6 @@ header("Content-type: text/html; charset=utf-8");
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
-//PHPMailerを使用するための読み込み
-require '../src/Exception.php';
-require '../src/PHPMailer.php';
-require '../src/SMTP.php';
-require 'setting.php';
-
 //データベース接続
 require_once("../database/db.php");
 $dbh = db_connect();
@@ -20,7 +14,7 @@ $dbh = db_connect();
 $errors = array();
 
 if(empty($_GET)) {
-  header("Location: http://localhost/advan/top.php");
+  header("Location: ../index.php");
   exit();
 }else{
   $mailAdress = $_SESSION['mailAdress'];
@@ -64,56 +58,23 @@ if(empty($_GET)) {
       //データベース接続切断
       $dbh = null;
 
-      /*
-      登録完了のメールを送信
-      */
-
-      //メールの宛先
-      $mailTo = $mailAdress;
-
-      //Return-Pathに指定するメールアドレス
-      $returnMail = 'tbtechbase@gmail.com';
-
-      $name = "advan機材リスト管理人";
-      $mailAdress = 'tbtechbase@gmail.com';
+      $mailTo = $mailAdress;  //宛先メールアドレス
       $subject = "【Advan】会員登録完了のお知らせ";
 
-      //Fromヘッダーを作成
-      $header = 'From: '.$name."< ".$mailAdress." >";
+      $content ="{$account} 様\n";
+      $content .="会員登録完了のお知らせメールです。\n";
+      $content .="{$url}";
 
-      $mail = new PHPMailer\PHPMailer\PHPMailer();
+      $headers = <<<HEAD
+      From : tbtechbase@gmail.com
+      Return-Path: tbtechbase@gmail.com
+      HEAD;
 
-      $mail->isSMTP(); // SMTPを使うようにメーラーを設定する
-      $mail->SMTPAuth = true;
-      $mail->Host = MAIL_HOST; // メインのSMTPサーバー（メールホスト名）を指定
-      $mail->Username = MAIL_USERNAME; // SMTPユーザー名（メールユーザー名）
-      $mail->Password = MAIL_PASSWORD; // SMTPパスワード（メールパスワード）
-      $mail->SMTPSecure = MAIL_ENCRPT; // TLS暗号化を有効にし、「SSL」も受け入れます
-      $mail->Port = SMTP_PORT; // 接続するTCPポート
+      $is_success = mb_send_mail($mailTo, $subject, $content, $headers);
 
-      // メール内容設定
-      $mail->CharSet = "UTF-8";
-      $mail->Encoding = "base64";
-      $mail->setFrom(MAIL_FROM,MAIL_FROM_NAME);
-      $mail->addAddress($mailTo, '本登録'); //受信者（送信先）を追加する
-      //    $mail->addReplyTo('xxxxxxxxxx@xxxxxxxxxx','返信先');
-      //    $mail->addCC('xxxxxxxxxx@xxxxxxxxxx'); // CCで追加
-      //    $mail->addBcc('xxxxxxxxxx@xxxxxxxxxx'); // BCCで追加
-      $mail->Subject = $subject; // メールタイトル
-      $mail->isHTML(true);    // HTMLフォーマットの場合はコチラを設定します
-      $body = <<< EOM
-      {$account} 様 <br />
-      会員登録完了のお知らせメールです。<br />
-      <br />
-      EOM;
-
-      $mail->Body  = $body.$header; // メール本文
-      // メール送信の実行
-      if(!$mail->send()) {
+      if(!$is_success) {
         $errors['mail_error'] = "メールの送信に失敗しました。";
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-      }else{
-
+      }else {
         //セッション変数を全て解除
         $_SESSION = array();
 

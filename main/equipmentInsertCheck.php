@@ -27,7 +27,7 @@ if($genre == "Sound"){
 $way = $_SESSION['way'];
 
 if(empty($_POST)) {
-  header("Location: http://localhost/advan/top.php");
+  header("Location: ../index.php");
   exit();
 }else{
 

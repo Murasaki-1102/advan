@@ -23,8 +23,8 @@ if($genre == "Sound"){
 }
 
 
-$maker = isset($_SESSION['maker']) ? $_SESSION['maker'] : NULL; //三項演算子
-$name = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+$maker = spaceTrim(isset($_SESSION['maker']) ? $_SESSION['maker'] : NULL); //三項演算子
+$name = spaceTrim(isset($_SESSION['name']) ? $_SESSION['name'] : NULL);
 $category = isset($_SESSION['category']) ? $_SESSION['category'] : NULL;
 $comment = isset($_SESSION['comment']) ? $_SESSION['comment'] : NULL;
 $stock = isset($_SESSION['stock']) ? $_SESSION['stock'] : NULL;
@@ -34,13 +34,6 @@ $image3 = isset($_SESSION['path'][2]) ? $_SESSION['path'][2] : NULL;
 $weight = isset($_SESSION['weight']) ? $_SESSION['weight'] : NULL;
 $power = isset($_SESSION['power']) ? $_SESSION['power'] : NULL;
 $date = date('Y/m/d H:i:s');
-
-$maker = spaceTrim($maker);
-$name = spaceTrim($name);
-$comment = spaceTrim($comment);
-$stock = spaceTrim($stock);
-$weight = spaceTrim($weight);
-$power = spaceTrim($power);
 
 $src = array();
 

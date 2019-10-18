@@ -38,7 +38,7 @@ session_start();
       <div class="col-sm-4">
         <div class="genre">
           <div class="icon">
-            <a href="http://localhost/advan/main/list.php?genre=Sound">
+            <a href="main/list.php?genre=Sound">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-sliders-h fa-stack-1x fa-inverse" ></i>
@@ -50,7 +50,7 @@ session_start();
       <div class="col-sm-4">
         <div class="genre">
           <div class="icon">
-            <a href="http://localhost/advan/main/list.php?genre=Stage">
+            <a href="main/list.php?genre=Stage">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
@@ -62,7 +62,7 @@ session_start();
       <div class="col-sm-4">
         <div class="genre">
           <div class="icon">
-            <a href="http://localhost/advan/main/list.php?genre=Light">
+            <a href="main/list.php?genre=Light">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-lightbulb fa-stack-1x fa-inverse" ></i>
