@@ -1,86 +1,70 @@
 <?php
 session_start();
+require_once("database/equipment.php");
+
+// $genre = $_GET['genre'];
+
+// if($genre == "Sound"){
+  require_once("database/soundData.php");
+// }elseif($genre == "Stage"){
+//   require_once("database/stageData.php");
+// }else{
+//   require_once("database/lightData.php");
+// }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
-  <?php include("component/head.php"); ?>
+  <?php include($_SERVER["DOCUMENT_ROOT"] ."/component/head.php"); ?>
 </head>
-
 <body>
+  <header>
+  <?php include($_SERVER["DOCUMENT_ROOT"]."/component/header.php"); ?>
+  </header>
 
-  <!-- ヘッダーの読み込み -->
-  <?php include("component/header.php");?>
+  <main role="main">
+    <section class="jumbotron text-center">
+      <div class="container">
+        <!-- <h1><?php echo $genre ?>Equipments</h1> -->
+        <p class="lead text-muted"></p>
+        <p>
+          <a href="equipmentInsert.php?genre=<?php echo $genre ?>" class="btn btn-primary my-2">追加する</a>
+        </p>
+      </div>
+    </section>
 
-  <div class="top-message">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col mx-auto">
-          <div class="site-heading">
-            <h1>Advanced Creators</h1>
-            <span class="subheading">機材をしっかり理解してイベントを成功させよう</span>
-          </div>
+    <div class="py-5 bg-light">
+      <div class="container-fluid">
+        <div class="row">
+
+          <?php foreach ($equipments as $equipment): ?>
+            <div class="col-md-3">
+              <div class="card mb-3 shadow-sm">
+                <img class="card-img-top" src="<?php echo $equipment->getImg1() ?>" style="">
+                <div class="card-body">
+                  <p class="card-text"><?php echo $equipment->getName() ?></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-sm btn-outline-secondary" href="/main/show.php?name=<?php echo $equipment->getName() ?>">見る</a>
+                    <small class="text-muted" style="padding-left:10px">Last Modified <?php echo $equipment->getDate() ?></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php endforeach ?>
+
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <h1 class="text-center">機材リスト</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="genre">
-          <div class="icon">
-            <a href="main/list.php?genre=Sound">
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-sliders-h fa-stack-1x fa-inverse" ></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="genre">
-          <div class="icon">
-            <a href="main/list.php?genre=Stage">
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="genre">
-          <div class="icon">
-            <a href="main/list.php?genre=Light">
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-lightbulb fa-stack-1x fa-inverse" ></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  </main>
+  
   <!-- フッターの読み込み -->
-  <?php include("component/footer.php");?>
+  <?php include($_SERVER["DOCUMENT_ROOT"]."/component/footer.php"); ?>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

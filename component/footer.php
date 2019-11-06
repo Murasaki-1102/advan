@@ -14,7 +14,7 @@
             </a>
           </li>
           <li class="list-inline-item">
-            <a href="http://advancedcreators.undo.jp/site/list/main/list.php?genre=Sound">
+            <a href="/">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-sliders-h fa-stack-1x fa-inverse" ></i>
@@ -22,7 +22,7 @@
             </a>
           </li>
           <li class="list-inline-item">
-            <a href="http://advancedcreators.undo.jp/site/list/main/list.php?genre=Stage">
+            <a href="/">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
@@ -33,7 +33,7 @@
             <a href="http://advancedcreators.undo.jp/site/list/main/list.php?genre=Light">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-lightbulb fa-stack-1x fa-inverse" ></i>
+                <i class="fas fa-lightbulb fa-stack-1x fa-inverse"></i>
               </span>
             </a>
           </li>

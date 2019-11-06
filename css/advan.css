@@ -1,12 +1,17 @@
-p {
-    line-height: 1.5;
-    margin: 30px 0;
+body {
+  padding-top: 3rem;
 }
 
-a {
-    color: #212529;
-    transition: all .2s;
-}
+/* p {
+    line-height: 1.5;
+    margin: 30px 0;
+} */
+
+/* a {
+    color: #000;
+    /* transition: all .2s;
+}*/
+
 img{
   max-width: 100%;
   height: auto;
@@ -27,28 +32,19 @@ img{
   margin-bottom: 2px;
 }
 
-.navbar {
-    border: 1px solid transparent;
-}
-
-.logo{
+.nav-logo{
   height: 30px;
 }
 
-.navbar.create-user{
-    position: relative;
-
-}
 .page-header {
     padding-bottom: 11px;
     margin: 48px 0 24px;
 }
+
 .top-message {
-    margin-bottom: 30px;
-    background-image: url(../img/backkirakira.jpg);
+    background-image: url(/imgs/backkirakira.jpg);
     background-position: center center;
     background-repeat: no-repeat;
-    background-color: #868e96;
     background-attachment: scroll;
     background-size: cover;
     position: relative;
@@ -65,23 +61,24 @@ img{
 }
 
 .top-message .site-heading {
-    padding: 200px 0 200px;
+    padding: 200px 0 230px;
     color: #000;
     text-align: center;
 }
 
 .top-message .site-heading h1 {
-    font-size: 50px;
-    margin-top: 0;
+    font-size: 48px;
+
 }
 
 .top-message .site-heading .subheading {
     font-size: 24px;
-    font-weight: 300;
-    line-height: 1.1;
-    display: block;
     margin: 10px 0 0;
     font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+.section {
+margin-top: 30px;
 }
 
 .genre {
@@ -147,19 +144,14 @@ pre{
   letter-spacing: 1px;
 }
 
-.err p{
-  margin-left: 20px;
-}
-
 footer{
   padding-top: 30px;
   border-top: 1px solid rgba(0,0,0,.1);
 }
-footer .list-inline {
-    margin: 0;
-    padding: 0;
-}
 
+footer a {
+  color: #000;
+}
 
 
 footer .copyright {
@@ -175,4 +167,14 @@ footer .copyright {
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     border-radius: 2px;
+}
+
+span.error-message {
+  display: block;
+  color: red;
+  margin-top: 5px;
+}
+.input_error {
+  background-color: #F4D4D4;
+  border: 1px solid #F88A8A;
 }
