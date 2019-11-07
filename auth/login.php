@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 header("Content-type: text/html; charset=utf-8");
 
 //クリックジャッキング対策
@@ -33,7 +32,7 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
                   <?php foreach($_SESSION as $key => $val) : ?>
                     <span class="error-message"><?=$val?></span>
                   <?php endforeach ?>
-                <?php endif ?>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="mailAdress" class="col">mailAdress</label>

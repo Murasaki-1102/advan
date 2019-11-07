@@ -6,10 +6,10 @@ header("Content-type: text/html; charset=utf-8");
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
-//データベース接続
-require_once($_SERVER["DOCUMENT_ROOT"]."/database/db.php");
-$dbh = db_connect();
-
+if(empty($_POST)) {
+  header("Location: /");
+  exit();
+}else{
 	$errors = array();
 	$urltoken = hash('sha256',uniqid(rand(),1));
 	$mailAdress = $_SESSION['mailAdress'];
@@ -17,6 +17,11 @@ $dbh = db_connect();
 	$grade = $_SESSION['grade'];
 	$password_hash =  password_hash($_SESSION['password'], PASSWORD_DEFAULT);
 	//ここでデータベースに登録する
+
+	//データベース接続
+	require_once($_SERVER["DOCUMENT_ROOT"]."/database/db.php");
+	$dbh = db_connect();
+
 	try{
 		//例外処理を投げる（スロー）ようにする
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -63,7 +68,7 @@ $dbh = db_connect();
 			$is_success = mb_send_mail($mailTo, $subject, $content, $headers);
 
 			if(!$is_success) {
-				$errors['mail_error'] = "メールの送信に失敗しました。";
+				$errors['mail_error'] = "メールの送信に失敗しました。最初からやり直してください";
 			}else {
 				$message = "メールをお送りしました。24時間以内にメールに記載されたURLへ進んでください。";
 			}
@@ -75,4 +80,5 @@ $dbh = db_connect();
 		exit();
 	}
 	include($_SERVER["DOCUMENT_ROOT"] ."/auth/createUser-page.php");
+}
 ?>

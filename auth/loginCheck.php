@@ -6,10 +6,6 @@ header("Content-type: text/html; charset=utf-8");
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: SAMEORIGIN');
 
-//データベース接続
-require_once($_SERVER["DOCUMENT_ROOT"]."/database/db.php");
-$dbh = db_connect();
-
 //前後にある半角全角スペースを削除する関数
 function spaceTrim ($str) {
 	// 行頭
@@ -19,9 +15,6 @@ function spaceTrim ($str) {
 	return $str;
 }
 
-//エラーメッセージの初期化
-$errors = array();
-
 if(empty($_POST)) {
 	header("Location: login.php");
 	exit();
@@ -29,6 +22,10 @@ if(empty($_POST)) {
 	//POSTされたデータを各変数に入れる
 	$mailAdress = spaceTrim(isset($_POST['mailAdress']) ? $_POST['mailAdress'] : NULL);
 	$password = spaceTrim(isset($_POST['password']) ? $_POST['password'] : NULL);
+
+	//データベース接続
+	require_once($_SERVER["DOCUMENT_ROOT"]."/database/db.php");
+	$dbh = db_connect();
 
 	try{
 		//例外処理を投げる（スロー）ようにする

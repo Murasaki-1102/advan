@@ -31,8 +31,8 @@ function input_check(){
         $("#mailAdress-error").text("メールアドレスを入力してください");
         $("#mailAdress").addClass("input_error");
         result = false;
-    } else if (!mailAdress.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
-        $("#mailAdress-error").text("正しいメールアドレスを入力してください");
+    } else if (!mailAdress.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@(edu)+([a-zA-Z0-9\._-]+)+$/)) {
+        $("#mailAdress-error").text("このメールアドレスは使えません");
         $("#mailAdress").addClass("input_error");
         result = false;
     }
