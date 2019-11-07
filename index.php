@@ -1,16 +1,7 @@
 <?php
 session_start();
 require_once("database/equipment.php");
-
-// $genre = $_GET['genre'];
-
-// if($genre == "Sound"){
-  require_once("database/soundData.php");
-// }elseif($genre == "Stage"){
-//   require_once("database/stageData.php");
-// }else{
-//   require_once("database/lightData.php");
-// }
+require_once("database/equipmentData.php");
 
 ?>
 

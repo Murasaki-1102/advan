@@ -5,6 +5,7 @@ class equipment {
   protected $maker;
   protected $name;
   protected $category;
+  protected $subCategory;
   protected $comment;
   protected $stock;
   protected $img1;
@@ -14,10 +15,11 @@ class equipment {
   protected $power;
   protected $date;
 
-  public function __construct($maker,$name,$category,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date){
+  public function __construct($maker,$name,$category,$subCategory,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date){
     $this->maker = $maker;
     $this->name = $name;
     $this->category = $category;
+    $this->subCategory = $subCategory;
     $this->comment = $comment;
     $this->stock = $stock;
     $this->img1 = $img1;
@@ -38,6 +40,9 @@ class equipment {
   }
   public function getCategory(){
     return $this->category;
+  }
+  public function getSubCategory(){
+    return $this->subCategory;
   }
   public function getComment(){
     return $this->comment;
