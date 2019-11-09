@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 header("Content-type: text/html; charset=utf-8");
 
 //クリックジャッキング対策
@@ -15,19 +16,10 @@ function spaceTrim ($str)
   return $str;
 }
 
-$genre = $_GET['genre'];
-if($genre == "Sound"){
-  $table = "sound_equipments";
-}elseif($genre == "Stage"){
-  $table = "stage_equipments";
-}elseif($genre == "Light"){
-  $table = "light_equipments";
-}
-
 $way = $_SESSION['way'];
 
 if(empty($_POST)) {
-  header("Location: ../index.php");
+  header("Location: /");
   exit();
 }else{
 
@@ -35,41 +27,53 @@ if(empty($_POST)) {
   $maker = spaceTrim(isset($_POST['maker']) ? $_POST['maker'] : NULL); //三項演算子
   $name = spaceTrim(isset($_POST['name']) ? $_POST['name'] : NULL);
   $category = isset($_POST['category']) ? $_POST['category'] : NULL;
+  $subCategory = isset($_POST['subCategory']) ? $_POST['subCategory'] : NULL;
   $comment = spaceTrim(isset($_POST['comment']) ? $_POST['comment'] : NULL);
   $stock = spaceTrim(isset($_POST['stock']) ? $_POST['stock'] : NULL);
   $weight = spaceTrim(isset($_POST['weight']) ? $_POST['weight'] : NULL);
   $power = spaceTrim(isset($_POST['power']) ? $_POST['power'] : NULL);
   $img = isset($_POST['img[]']) ? $_POST['img[]'] : NULL;
-
-  $date = date('Y/m/d H:i:s');
+	$date = date('Y/m/d H:i:s');
 
   $_SESSION['maker'] = $maker;
   $_SESSION['name'] = $name;
   $_SESSION['category'] = $category;
+  $_SESSION['subCategory'] = $subCategory;
   $_SESSION['comment'] = $comment;
   $_SESSION['stock'] = $stock;
   $_SESSION['weight'] = $weight;
   $_SESSION['power'] = $power;
-  $_SESSION['date'] = $date;
+	$_SESSION['date'] = $date;
+
   $_SESSION['path'] = "";
 
   $src = array();
-  $path = array();
+	$path = array();
+
+	$mailAdress = $_SESSION['mailAdress'];
+
+	//データベース接続
+  require_once($_SERVER["DOCUMENT_ROOT"]."/database/db.php");
+	$dbh = db_connect();
+
+	$statement = $dbh->prepare("SELECT * FROM member WHERE mailAdress=(:mailAdress) AND flag =1");
+  $statement->bindValue(':mailAdress', $mailAdress, PDO::PARAM_STR);
+  $statement->execute();
+
+  if($row = $statement->fetch()){
+    $last_user = $row['account'];
+		$_SESSION['last_user'] = $last_user;
+	}
+
   if(empty($_FILES['img']['name'][0])){
-
-    //データベース接続
-    require_once("../database/db.php");
-    $dbh = db_connect();
-
     try{
-
       //例外処理を投げる（スロー）ようにする
       $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       //アカウントで検索
-      $statement = $dbh->prepare("SELECT * FROM $table WHERE name = '$name'");
+      $statement = $dbh->prepare("SELECT * FROM equipments WHERE name = '$name'");
       $statement->bindValue(':name', $name, PDO::PARAM_STR);
       $statement->execute();
-
+			// 既に画像がアップロードされてる場合
       if($rows = $statement->fetch()){
         if(!empty($rows['image1'])){
           $path[] = $rows['image1'];
@@ -82,7 +86,9 @@ if(empty($_POST)) {
         }
 
         $_SESSION['path'] = $path;
-      }
+			}
+			$dbh = null;
+
     }catch (PDOException $e){
       print('Error:'.$e->getMessage());
       exit();
@@ -159,8 +165,6 @@ if(empty($_POST)) {
           throw new RuntimeException("[{$k}] ファイル保存時にエラーが発生しました");
         }
 
-        //  $_SESSION['path'] = $src[]
-
         $msg = ['green', 'ファイルは正常にアップロードされました'];
       } catch (RuntimeException $e) {
         $msg = ['red', $e->getMessage()];
@@ -168,94 +172,5 @@ if(empty($_POST)) {
     }
   }
 }
-
+include($_SERVER["DOCUMENT_ROOT"] ."/main/equipmentInsertCheck-page.php");
 ?>
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <?php include("../component/head.php"); ?>
-</head>
-
-<body>
-
-  <!-- ヘッダーの読み込み -->
-  <?php include("../component/header.php");?>
-  <main role="main">
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 offset-sm-3 text-center">
-            <a onclick="history.back()" class="btn btn-primary my-2" style="color: #fff;">戻る</a>
-            <?php if($way == "insert") : ?>
-              <a class="btn btn-primary my-2"  href="equipmentInsertComplete.php?genre=<?php echo $genre ?>">追加する</a>
-            <?php elseif($way == "edit") :?>
-              <a class="btn btn-primary my-2"  href="equipmentInsertComplete.php?genre=<?php echo $genre ?>">編集する</a>
-            <?php endif; ?>
-            <h2 class="equipment-title">プレビュー</h2>
-            <h2 class="equipment-title"><?php echo $name ?></h2>
-          </div>
-          <div class="equipment-comment col-xl-10 col-lg-10 offset-xl-2 offset-lg-1">
-            <pre><?php echo $comment ?></pre>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Maker</h2>
-              <p><?php echo $maker ?></p>
-            </div>
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Category</h2>
-              <p><?php echo $category ?></p>
-            </div>
-
-          </div>
-          <div class="col-md-6 col-lg-6">
-            <div class="equipment-img">
-              <?php if  (isset($rows)): ?>
-                <?php foreach ($path as $result) :?>
-                  <img src="<?php echo $result ?>">
-                <?php endforeach; ?>
-              <?php else : ?>
-                <?php foreach ($src as $val) : ?>
-                  <img src="<?php echo $val ?>">
-                <?php endforeach; ?>
-              <?php endif; ?>
-
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Weight</h2>
-              <p><?php echo $weight ?></p>
-            </div>
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Power</h2>
-              <p><?php echo $power ?></p>
-            </div>
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Stock</h2>
-              <p><?php echo $stock ?></p>
-            </div>
-            <div class="equipment-part">
-              <h2 class="equipment-subtitle">Last Modified</h2>
-              <p><?php echo $date ?></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- フッターの読み込み -->
-  <?php include("../component/footer.php");?>
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-</body>
-</html

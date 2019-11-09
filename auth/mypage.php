@@ -26,6 +26,7 @@ try{
   if($row = $statement->fetch()){
     $account = $row['account'];
   }
+  $dbh = null;
 
 }catch (PDOException $e){
   print('Error:'.$e->getMessage());

@@ -14,8 +14,9 @@ class equipment {
   protected $weight;
   protected $power;
   protected $date;
+  protected $last_user;
 
-  public function __construct($maker,$name,$category,$subCategory,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date){
+  public function __construct($maker,$name,$category,$subCategory,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date,$last_user){
     $this->maker = $maker;
     $this->name = $name;
     $this->category = $category;
@@ -28,8 +29,7 @@ class equipment {
     $this->weight = $weight;
     $this->power = $power;
     $this->date = $date;
-
-
+    $this->last_user = $last_user;
   }
 
   public function getMaker() {
@@ -68,6 +68,9 @@ class equipment {
   public function getDate(){
     return $this->date;
   }
+  public function getLast_user(){
+    return $this->last_user;
+  }
 
   public static function findByName($equipments,$name) {
     foreach($equipments as $equipment) {
@@ -76,7 +79,6 @@ class equipment {
       }
     }
   }
-
 }
 
 ?>

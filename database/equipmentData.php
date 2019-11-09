@@ -10,8 +10,8 @@ try{
   //例外処理を投げる（スロー）ようにする
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$name = "";
-	
-  $statement = $dbh->prepare("SELECT * FROM equipments");
+
+  $statement = $dbh->prepare("SELECT * FROM equipments ORDER BY date DESC");
   $statement->bindValue(':name', $name, PDO::PARAM_STR);
   $statement->execute();
 
@@ -32,7 +32,8 @@ try{
     $weight = $row['weight'];
     $power = $row['power'];
     $date = $row['date'];
-    ${"equipment".$i} = new equipment($maker,$name,$category,$subCategory,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date);
+    $last_user = $row['last_user'];
+    ${"equipment".$i} = new equipment($maker,$name,$category,$subCategory,$comment,$stock,$img1,$img2,$img3,$weight,$power,$date,$last_user);
 
     $equipments[] = ${"equipment".$i};
     $i++;
