@@ -19,17 +19,17 @@
               <fieldset>
                 <legend>機材追加</legend>
                 <div class="form-group">
-                  <label for="maker" class="col">maker</label>
-                  <div class="col">
-										<input type="text" class="form-control" id="maker" name="maker" placeholder="YAMAHA" value="">
-										<span id="maker-error" class="error-message"></span>
-                  </div>
-                </div>
-                <div class="form-group">
                   <label for="name" class="col">name</label>
                   <div class="col">
 										<input type="text" class="form-control" id="name" name="name" placeholder="MGP32X" value="">
 										<span id="name-error" class="error-message"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="maker" class="col">maker</label>
+                  <div class="col">
+										<input type="text" class="form-control" id="maker" name="maker" placeholder="YAMAHA" value="">
+										<span id="maker-error" class="error-message"></span>
                   </div>
                 </div>
                 <div class="form-group">

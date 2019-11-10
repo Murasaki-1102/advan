@@ -65,11 +65,7 @@ function input_check() {
     var power = $("#power").val();
     var imgs = $("#imgs").val();
 
-    if (maker == "") {
-        $("#maker-error").text("メーカー名を入力してください");
-        $("#maker").addClass("input_error");
-        result = false;
-    } else if (maker > 30) {
+    if (maker.length > 30) {
         $("#maker-error").text("メーカー名が長すぎます");
         $("#maker").addClass("input_error");
         result = false;

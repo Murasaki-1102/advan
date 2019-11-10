@@ -102,9 +102,25 @@ img {
 }
 
 .card-img-top {
-  /* height: 260px; */
-  padding: 10px;
+  max-height: 400px;
+  padding: 40px;
 }
+
+.main-contents {
+  min-height: 480px;
+  margin-bottom: 1rem;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}
+
+.card-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* .card-body_modified {
+  margin-left: 60px;
+} */
 
 legend {
   border-bottom: 1px solid #e5e5e5;

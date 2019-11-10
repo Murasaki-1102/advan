@@ -87,14 +87,16 @@
 										<?php endforeach; ?>
 									<?php endif; ?>
                 </div>
-                <a class="carousel-control-prev" href="#carousel-img" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel-img" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
+                <?php if (isset($rows['image2']) || isset($src[1])) : ?>
+                  <a class="carousel-control-prev" href="#carousel-img" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carousel-img" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                <?php endif; ?>
               </div>
             </div>
           </div>

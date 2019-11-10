@@ -38,14 +38,14 @@ if (!isset($_SESSION['login'])) {
         <div class="row" id="filter-list">
 
           <?php foreach ($equipments as $equipment): ?>
-            <div class="col-md-3 filter <?php echo $equipment->getCategory() ?>">
-              <div class="card mb-3 shadow-sm">
+            <div class="col-lg-3 col-md-4 col-sm-6 filter <?php echo $equipment->getCategory() ?>">
+              <div class="card main-contents">
                 <img class="card-img-top" src="<?php echo $equipment->getImg1() ?>">
                 <div class="card-body">
                   <p class="card-text"><?php echo $equipment->getName() ?></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <a href="/main/show.php?name=<?php echo $equipment->getName() ?>"><button class="btn btn-sm btn-outline-secondary">見る</button></a>
-                    <small class="text-muted" style="padding-left:10px">Last Modified <?php echo $equipment->getDate() ?></small>
+                    <small class="text-muted card-body_modified" style="padding-left:10px">Last Modified <?php echo $equipment->getDate() ?></small>
                   </div>
                 </div>
               </div>
