@@ -68,7 +68,7 @@ $display_data = array_slice($sort,$start_number,MAX, true);
       <div class="container-fluid">
         <div class="row" id="filter-list">
           <?php foreach ($display_data as $val) : ?>
-            <div class="col-lg-3 col-md-4 col-sm-6 filter <?php echo $val->getCategory() ?>">
+            <div class="col-lg-4 col-md-4 col-sm-6 filter <?php echo $val->getCategory() ?>">
               <div class="card main-contents">
                 <img class="card-img-top" src="<?php echo $val->getImg1() ?>">
                 <div class="card-body">
