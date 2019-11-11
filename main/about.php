@@ -40,7 +40,7 @@ if (!isset($_SESSION['login'])) {
         <div class="col-sm-4">
           <div class="genre">
             <div class="icon">
-              <a href="/">
+              <a href="/?sort=Sound">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-sliders-h fa-stack-1x fa-inverse" ></i>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['login'])) {
         <div class="col-sm-4">
           <div class="genre">
             <div class="icon">
-              <a href="/">
+              <a href="/?sort=Stage">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-microphone fa-stack-1x fa-inverse" ></i>
@@ -64,7 +64,7 @@ if (!isset($_SESSION['login'])) {
         <div class="col-sm-4">
           <div class="genre">
             <div class="icon">
-              <a href="/">
+              <a href="/?sort=Light">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-lightbulb fa-stack-1x fa-inverse" ></i>

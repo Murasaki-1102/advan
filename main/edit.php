@@ -6,7 +6,7 @@ if(!isset($_SESSION['login'])){
 }
 
 require_once("../database/equipmentData.php");
-
+$equipments = returnAll();
 $equipmentName = $_GET['name'];
 
 $equipment = equipment::findByName($equipments,$equipmentName);

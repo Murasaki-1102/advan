@@ -3,7 +3,7 @@ session_start();
 
 require_once("../database/equipmentData.php");
 $equipmentName = $_GET['name'];
-
+$equipments = returnAll();
 $equipment = equipment::findByName($equipments,$equipmentName);
 
 ?>
